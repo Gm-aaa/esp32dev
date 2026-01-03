@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">esp32dev</string>
+    <string name="main_activity_title">esp32dev</string>
+</resources>
