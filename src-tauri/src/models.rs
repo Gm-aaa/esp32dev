@@ -17,6 +17,7 @@ pub struct ChipDetails {
     pub mac_address: Option<String>,
     pub flash_size: Option<String>,
     pub features: Option<String>,
+    pub crystal_frequency: Option<String>,
     pub chip_revision: Option<String>,
     pub error: Option<String>,
 }

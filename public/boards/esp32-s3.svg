@@ -1,0 +1,348 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg id="_图层_1" data-name="图层 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 184.03 280.07">
+  <defs>
+    <style>
+      .cls-1, .cls-2, .cls-3, .cls-4 {
+        fill: none;
+      }
+
+      .cls-1, .cls-3, .cls-4, .cls-5 {
+        stroke: #800;
+      }
+
+      .cls-6 {
+        fill: #fff;
+      }
+
+      .cls-3 {
+        stroke-linecap: round;
+      }
+
+      .cls-3, .cls-4 {
+        stroke-linejoin: round;
+      }
+
+      .cls-7 {
+        font-family: AdobeSongStd-Light-GBpc-EUC-H, 'Adobe Song Std';
+        font-size: 8px;
+        font-weight: 300;
+      }
+
+      .cls-8, .cls-9, .cls-10 {
+        isolation: isolate;
+      }
+
+      .cls-11 {
+        letter-spacing: 0em;
+      }
+
+      .cls-9 {
+        font-size: 9.87px;
+      }
+
+      .cls-9, .cls-10 {
+        font-family: Verdana, Verdana;
+      }
+
+      .cls-9, .cls-5 {
+        fill: #800;
+      }
+
+      .cls-10 {
+        fill: blue;
+        font-size: 7px;
+      }
+
+      .cls-12 {
+        fill: gray;
+      }
+    </style>
+  </defs>
+  <g id="esp32-s3">
+    <rect class="cls-6" width="184.03" height="280.07"/>
+    <rect id="gge5" class="cls-1" x="30.1" y="10" width="120" height="260" rx="5" ry="5"/>
+    <circle id="gge318" class="cls-5" cx="40.1" cy="20" r="5"/>
+    <g id="_13V3" data-name="13V3">
+      <text class="cls-10" transform="translate(32.1 43)"><tspan x="0" y="0">3V3</tspan></text>
+      <text class="cls-10" transform="translate(20.65 39)"><tspan x="0" y="0">1</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="40" r="2"/>
+      <path class="cls-4" d="M10.1,40h20"/>
+    </g>
+    <g id="_23V3" data-name="23V3">
+      <text class="cls-10" transform="translate(32.1 53)"><tspan x="0" y="0">3V3</tspan></text>
+      <text class="cls-10" transform="translate(20.65 49)"><tspan x="0" y="0">2</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="50" r="2"/>
+      <path class="cls-4" d="M10.1,50h20"/>
+    </g>
+    <g id="_3RST" data-name="3RST">
+      <text class="cls-10" transform="translate(32.1 63)"><tspan x="0" y="0">RST</tspan></text>
+      <text class="cls-10" transform="translate(20.65 59)"><tspan x="0" y="0">3</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="60" r="2"/>
+      <path class="cls-4" d="M10.1,60h20"/>
+    </g>
+    <g id="_4IO4" data-name="4IO4">
+      <text class="cls-10" transform="translate(32.1 73)"><tspan x="0" y="0">IO4</tspan></text>
+      <text class="cls-10" transform="translate(20.65 69)"><tspan x="0" y="0">4</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="70" r="2"/>
+      <path class="cls-4" d="M10.1,70h20"/>
+    </g>
+    <g id="_5IO5" data-name="5IO5">
+      <text class="cls-10" transform="translate(32.1 83)"><tspan x="0" y="0">IO5</tspan></text>
+      <text class="cls-10" transform="translate(20.65 79)"><tspan x="0" y="0">5</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="80" r="2"/>
+      <path class="cls-4" d="M10.1,80h20"/>
+    </g>
+    <g id="_6IO6" data-name="6IO6">
+      <text class="cls-10" transform="translate(32.1 93)"><tspan x="0" y="0">IO6</tspan></text>
+      <text class="cls-10" transform="translate(20.65 89)"><tspan x="0" y="0">6</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="90" r="2"/>
+      <path class="cls-4" d="M10.1,90h20"/>
+    </g>
+    <g id="_7IO7" data-name="7IO7">
+      <text class="cls-10" transform="translate(32.1 103)"><tspan x="0" y="0">IO7</tspan></text>
+      <text class="cls-10" transform="translate(20.65 99)"><tspan x="0" y="0">7</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="100" r="2"/>
+      <path class="cls-4" d="M10.1,100h20"/>
+    </g>
+    <g id="_8IO15" data-name="8IO15">
+      <text class="cls-10" transform="translate(32.1 113)"><tspan x="0" y="0">IO15</tspan></text>
+      <text class="cls-10" transform="translate(20.65 109)"><tspan x="0" y="0">8</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="110" r="2"/>
+      <path class="cls-4" d="M10.1,110h20"/>
+    </g>
+    <g id="_9IO16" data-name="9IO16">
+      <text class="cls-10" transform="translate(32.1 123)"><tspan x="0" y="0">IO16</tspan></text>
+      <text class="cls-10" transform="translate(20.65 119)"><tspan x="0" y="0">9</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="120" r="2"/>
+      <path class="cls-4" d="M10.1,120h20"/>
+    </g>
+    <g id="_10IO17" data-name="10IO17">
+      <text class="cls-10" transform="translate(32.1 133)"><tspan x="0" y="0">IO17</tspan></text>
+      <text class="cls-10" transform="translate(16.2 129)"><tspan x="0" y="0">10</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="130" r="2"/>
+      <path class="cls-4" d="M10.1,130h20"/>
+    </g>
+    <g id="_11IO18" data-name="11IO18">
+      <text class="cls-10" transform="translate(32.1 143)"><tspan x="0" y="0">IO18</tspan></text>
+      <text class="cls-10" transform="translate(16.2 139)"><tspan x="0" y="0">11</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="140" r="2"/>
+      <path class="cls-4" d="M10.1,140h20"/>
+    </g>
+    <g id="_12IO8" data-name="12IO8">
+      <text class="cls-10" transform="translate(32.1 153)"><tspan x="0" y="0">IO8</tspan></text>
+      <text class="cls-10" transform="translate(16.2 149)"><tspan x="0" y="0">12</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="150" r="2"/>
+      <path class="cls-4" d="M10.1,150h20"/>
+    </g>
+    <g id="_13IO3" data-name="13IO3">
+      <text class="cls-10" transform="translate(32.1 163)"><tspan x="0" y="0">IO3</tspan></text>
+      <text class="cls-10" transform="translate(16.2 159)"><tspan x="0" y="0">13</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="160" r="2"/>
+      <path class="cls-4" d="M10.1,160h20"/>
+    </g>
+    <g id="_14IO46" data-name="14IO46">
+      <text class="cls-10" transform="translate(32.1 173)"><tspan x="0" y="0">IO46</tspan></text>
+      <text class="cls-10" transform="translate(16.2 169)"><tspan x="0" y="0">14</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="170" r="2"/>
+      <path class="cls-4" d="M10.1,170h20"/>
+    </g>
+    <g id="_15IO9" data-name="15IO9">
+      <text class="cls-10" transform="translate(32.1 183)"><tspan x="0" y="0">IO9</tspan></text>
+      <text class="cls-10" transform="translate(16.2 179)"><tspan x="0" y="0">15</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="180" r="2"/>
+      <path class="cls-4" d="M10.1,180h20"/>
+    </g>
+    <g id="_16IO10" data-name="16IO10">
+      <text class="cls-10" transform="translate(32.1 193)"><tspan x="0" y="0">IO10</tspan></text>
+      <text class="cls-10" transform="translate(16.2 189)"><tspan x="0" y="0">16</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="190" r="2"/>
+      <path class="cls-4" d="M10.1,190h20"/>
+    </g>
+    <g id="_17IO11" data-name="17IO11">
+      <text class="cls-10" transform="translate(32.1 203)"><tspan x="0" y="0">IO11</tspan></text>
+      <text class="cls-10" transform="translate(16.2 199)"><tspan x="0" y="0">17</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="200" r="2"/>
+      <path class="cls-4" d="M10.1,200h20"/>
+    </g>
+    <g id="_18IO12" data-name="18IO12">
+      <text class="cls-10" transform="translate(32.1 213)"><tspan x="0" y="0">IO12</tspan></text>
+      <text class="cls-10" transform="translate(16.2 209)"><tspan x="0" y="0">18</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="210" r="2"/>
+      <path class="cls-4" d="M10.1,210h20"/>
+    </g>
+    <g id="_19IO13" data-name="19IO13">
+      <text class="cls-10" transform="translate(32.1 223)"><tspan x="0" y="0">IO13</tspan></text>
+      <text class="cls-10" transform="translate(16.2 219)"><tspan x="0" y="0">19</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="220" r="2"/>
+      <path class="cls-4" d="M10.1,220h20"/>
+    </g>
+    <g id="_20IO14" data-name="20IO14">
+      <text class="cls-10" transform="translate(32.1 233)"><tspan x="0" y="0">IO14</tspan></text>
+      <text class="cls-10" transform="translate(16.2 229)"><tspan x="0" y="0">20</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="230" r="2"/>
+      <path class="cls-4" d="M10.1,230h20"/>
+    </g>
+    <g id="_215V" data-name="215V">
+      <text class="cls-10" transform="translate(32.1 243)"><tspan x="0" y="0">5V</tspan></text>
+      <text class="cls-10" transform="translate(16.2 239)"><tspan x="0" y="0">21</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="240" r="2"/>
+      <path class="cls-4" d="M10.1,240h20"/>
+    </g>
+    <g id="_22GND" data-name="22GND">
+      <text class="cls-10" transform="translate(32.1 253)"><tspan x="0" y="0">GND</tspan></text>
+      <text class="cls-10" transform="translate(16.2 249)"><tspan x="0" y="0">22</tspan></text>
+      <circle class="cls-2" cx="10.1" cy="250" r="2"/>
+      <path class="cls-4" d="M10.1,250h20"/>
+    </g>
+    <g id="_23GND" data-name="23GND">
+      <text class="cls-10" transform="translate(132.04 253)"><tspan x="0" y="0">GND</tspan></text>
+      <text class="cls-10" transform="translate(155.1 249)"><tspan x="0" y="0">23</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="250" r="2"/>
+      <path class="cls-4" d="M170.1,250h-20"/>
+    </g>
+    <g id="_24TX" data-name="24TX">
+      <text class="cls-10" transform="translate(138.99 243)"><tspan x="0" y="0">TX</tspan></text>
+      <text class="cls-10" transform="translate(155.1 239)"><tspan x="0" y="0">24</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="240" r="2"/>
+      <path class="cls-4" d="M170.1,240h-20"/>
+    </g>
+    <g id="_25RX" data-name="25RX">
+      <text class="cls-10" transform="translate(138.44 233)"><tspan x="0" y="0">RX</tspan></text>
+      <text class="cls-10" transform="translate(155.1 229)"><tspan x="0" y="0">25</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="230" r="2"/>
+      <path class="cls-4" d="M170.1,230h-20"/>
+    </g>
+    <g id="_26IO1" data-name="26IO1">
+      <text class="cls-10" transform="translate(135.19 223)"><tspan x="0" y="0">IO1</tspan></text>
+      <text class="cls-10" transform="translate(155.1 219)"><tspan x="0" y="0">26</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="220" r="2"/>
+      <path class="cls-4" d="M170.1,220h-20"/>
+    </g>
+    <g id="_27IO2" data-name="27IO2">
+      <text class="cls-10" transform="translate(135.19 213)"><tspan x="0" y="0">IO2</tspan></text>
+      <text class="cls-10" transform="translate(155.1 209)"><tspan x="0" y="0">27</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="210" r="2"/>
+      <path class="cls-4" d="M170.1,210h-20"/>
+    </g>
+    <g id="_28IO42" data-name="28IO42">
+      <text class="cls-10" transform="translate(130.74 203)"><tspan x="0" y="0">IO42</tspan></text>
+      <text class="cls-10" transform="translate(155.1 199)"><tspan x="0" y="0">28</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="200" r="2"/>
+      <path class="cls-4" d="M170.1,200h-20"/>
+    </g>
+    <g id="_29IO41" data-name="29IO41">
+      <text class="cls-10" transform="translate(130.74 193)"><tspan x="0" y="0">IO41</tspan></text>
+      <text class="cls-10" transform="translate(155.1 189)"><tspan x="0" y="0">29</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="190" r="2"/>
+      <path class="cls-4" d="M170.1,190h-20"/>
+    </g>
+    <g id="_30IO40" data-name="30IO40">
+      <text class="cls-10" transform="translate(130.74 183)"><tspan x="0" y="0">IO40</tspan></text>
+      <text class="cls-10" transform="translate(155.1 179)"><tspan x="0" y="0">30</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="180" r="2"/>
+      <path class="cls-4" d="M170.1,180h-20"/>
+    </g>
+    <g id="_31IO39" data-name="31IO39">
+      <text class="cls-10" transform="translate(130.74 173)"><tspan x="0" y="0">IO39</tspan></text>
+      <text class="cls-10" transform="translate(155.1 169)"><tspan x="0" y="0">31</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="170" r="2"/>
+      <path class="cls-4" d="M170.1,170h-20"/>
+    </g>
+    <g id="_32IO38" data-name="32IO38">
+      <text class="cls-10" transform="translate(130.74 163)"><tspan x="0" y="0">IO38</tspan></text>
+      <text class="cls-10" transform="translate(155.1 159)"><tspan x="0" y="0">32</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="160" r="2"/>
+      <path class="cls-4" d="M170.1,160h-20"/>
+    </g>
+    <g id="_33IO37" data-name="33IO37">
+      <text class="cls-10" transform="translate(130.74 153)"><tspan x="0" y="0">IO37</tspan></text>
+      <text class="cls-10" transform="translate(155.1 149)"><tspan x="0" y="0">33</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="150" r="2"/>
+      <path class="cls-4" d="M170.1,150h-20"/>
+    </g>
+    <g id="_34IO36" data-name="34IO36">
+      <text class="cls-10" transform="translate(130.74 143)"><tspan x="0" y="0">IO36</tspan></text>
+      <text class="cls-10" transform="translate(155.1 139)"><tspan x="0" y="0">34</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="140" r="2"/>
+      <path class="cls-4" d="M170.1,140h-20"/>
+    </g>
+    <g id="_35IO35" data-name="35IO35">
+      <text class="cls-10" transform="translate(130.74 133)"><tspan x="0" y="0">IO35</tspan></text>
+      <text class="cls-10" transform="translate(155.1 129)"><tspan x="0" y="0">35</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="130" r="2"/>
+      <path class="cls-4" d="M170.1,130h-20"/>
+    </g>
+    <g id="_36IO0" data-name="36IO0">
+      <text class="cls-10" transform="translate(135.19 123)"><tspan x="0" y="0">IO0</tspan></text>
+      <text class="cls-10" transform="translate(155.1 119)"><tspan x="0" y="0">36</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="120" r="2"/>
+      <path class="cls-4" d="M170.1,120h-20"/>
+    </g>
+    <g id="_37IO45" data-name="37IO45">
+      <text class="cls-10" transform="translate(130.74 113)"><tspan x="0" y="0">IO45</tspan></text>
+      <text class="cls-10" transform="translate(155.1 109)"><tspan x="0" y="0">37</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="110" r="2"/>
+      <path class="cls-4" d="M170.1,110h-20"/>
+    </g>
+    <g id="_38IO48" data-name="38IO48">
+      <text class="cls-10" transform="translate(130.74 103)"><tspan x="0" y="0">IO48</tspan></text>
+      <text class="cls-10" transform="translate(155.1 99)"><tspan x="0" y="0">38</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="100" r="2"/>
+      <path class="cls-4" d="M170.1,100h-20"/>
+    </g>
+    <g id="_39IO47" data-name="39IO47">
+      <text class="cls-10" transform="translate(130.74 93)"><tspan x="0" y="0">IO47</tspan></text>
+      <text class="cls-10" transform="translate(155.1 89)"><tspan x="0" y="0">39</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="90" r="2"/>
+      <path class="cls-4" d="M170.1,90h-20"/>
+    </g>
+    <g id="_40IO21" data-name="40IO21">
+      <text class="cls-10" transform="translate(130.74 83)"><tspan x="0" y="0">IO21</tspan></text>
+      <text class="cls-10" transform="translate(155.1 79)"><tspan x="0" y="0">40</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="80" r="2"/>
+      <path class="cls-4" d="M170.1,80h-20"/>
+    </g>
+    <g id="_41IO20" data-name="41IO20">
+      <text class="cls-10" transform="translate(130.74 73)"><tspan x="0" y="0">IO20</tspan></text>
+      <text class="cls-10" transform="translate(155.1 69)"><tspan x="0" y="0">41</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="70" r="2"/>
+      <path class="cls-4" d="M170.1,70h-20"/>
+    </g>
+    <g id="_42IO19" data-name="42IO19">
+      <text class="cls-10" transform="translate(130.74 63)"><tspan x="0" y="0">IO19</tspan></text>
+      <text class="cls-10" transform="translate(155.1 59)"><tspan x="0" y="0">42</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="60" r="2"/>
+      <path class="cls-4" d="M170.1,60h-20"/>
+    </g>
+    <g id="_43GND" data-name="43GND">
+      <text class="cls-10" transform="translate(132.04 53)"><tspan x="0" y="0">GND</tspan></text>
+      <text class="cls-10" transform="translate(155.1 49)"><tspan x="0" y="0">43</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="50" r="2"/>
+      <path class="cls-4" d="M170.1,50h-20"/>
+    </g>
+    <g id="_44GND" data-name="44GND">
+      <text class="cls-10" transform="translate(132.04 43)"><tspan x="0" y="0">GND</tspan></text>
+      <text class="cls-10" transform="translate(155.1 39)"><tspan x="0" y="0">44</tspan></text>
+      <circle class="cls-2" cx="170.1" cy="40" r="2"/>
+      <path class="cls-4" d="M170.1,40h-20"/>
+    </g>
+    <g id="USB">
+      <rect id="gge3541" class="cls-1" x="50.1" y="240" width="35" height="30"/>
+      <polyline id="gge3547" class="cls-3" points="55.1 240 55.1 245 63.1 245 63.1 243 58.1 243 58.1 240 58.1 240"/>
+      <polyline id="gge3550" class="cls-3" points="80.1 240 80.1 245 72.1 245 72.1 243 77.1 243 77.1 240 77.1 240"/>
+      <text class="cls-7" transform="translate(60.73 237.82)"><tspan x="0" y="0">USB</tspan></text>
+    </g>
+    <g id="COM">
+      <polyline id="gge5290" class="cls-3" points="111.6 240 111.6 245 103.6 245 103.6 243 108.6 243 108.6 240 108.6 240"/>
+      <polyline id="gge5293" class="cls-3" points="100.1 240 100.1 245 108.1 245 108.1 243 103.1 243 103.1 240 103.1 240"/>
+      <rect id="gge5296" class="cls-1" x="95.1" y="240" width="35" height="30"/>
+      <text class="cls-7" transform="translate(101.72 237.49)"><tspan x="0" y="0">COM</tspan></text>
+    </g>
+    <g id="MCU">
+      <g class="cls-8">
+        <text class="cls-9" transform="translate(65.85 26.41)"><tspan x="0" y="0">ESP32</tspan><tspan class="cls-11" x="31.48" y="0">-</tspan><tspan x="35.87" y="0">S3</tspan></text>
+        <path class="cls-12" d="M126.96,96.84c-.24.23-.55.26-.91.28-1.96.04-7.98,0-15.81.02-11.51,0-24.91,0-36.6,0-5.41,0-10.43,0-15.64,0-2.88-.03-2.9.27-2.89-2.57,0-7.02,0-13.92,0-21.13,0-8.29,0-18.96,0-26.5.02-3.94-.04-6.73.04-7.87.05-.66.28-1.02,1.07-1.03,10.11-.08,62.42-.01,69.76,0,1.08.05,1.19.32,1.23,1.56.04,12.91,0,32.96.01,46.39-.16,5.75.34,8.55-.24,10.85l-.02.03Z"/>
+      </g>
+    </g>
+  </g>
+</svg>

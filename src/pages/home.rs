@@ -27,6 +27,7 @@ struct ChipDetails {
     mac_address: Option<String>,
     flash_size: Option<String>,
     chip_revision: Option<String>,
+    crystal_frequency: Option<String>,
     features: Option<String>,
     error: Option<String>,
 }
@@ -58,6 +59,7 @@ pub fn Home() -> Element {
         mac_address: None,
         flash_size: None,
         chip_revision: None,
+        crystal_frequency: None,
         features: None,
         error: None,
     });
@@ -129,6 +131,7 @@ pub fn Home() -> Element {
                                         mac_address: None,
                                         flash_size: None,
                                         chip_revision: None,
+                                        crystal_frequency: None,
                                         features: None,
                                         error: None,
                                     });
@@ -168,6 +171,7 @@ pub fn Home() -> Element {
                                         mac_address: None,
                                         flash_size: None,
                                         chip_revision: None,
+                                        crystal_frequency: None,
                                         features: None,
                                         error: None,
                                     });
@@ -361,6 +365,13 @@ pub fn Home() -> Element {
                                             icon: "verified_user",
                                             label: dict.chip_revision.to_string(),
                                             value: rev.clone(),
+                                        }
+                                    }
+                                    if let Some(freq) = &chip_details.read().crystal_frequency {
+                                        InfoItem {
+                                            icon: "sensors",
+                                            label: dict.crystal_frequency.to_string(),
+                                            value: freq.clone(),
                                         }
                                     }
                                     if let Some(feats) = &chip_details.read().features {

@@ -32,6 +32,7 @@ pub struct Dict {
     pub flash_size: &'static str,
     pub mac_address: &'static str,
     pub chip_revision: &'static str,
+    pub crystal_frequency: &'static str,
     pub features: &'static str,
 
     pub connection_type: &'static str,
@@ -60,6 +61,9 @@ pub struct Dict {
     pub devices_btn_send: &'static str,
     pub devices_btn_disconnect: &'static str,
     pub devices_btn_clear: &'static str,
+    pub monitor_tab: &'static str,
+    pub board_view_tab: &'static str,
+    pub board_view_title: &'static str,
 }
 
 pub const EN_DICT: Dict = Dict {
@@ -89,6 +93,7 @@ pub const EN_DICT: Dict = Dict {
     flash_size: "Flash Size",
     mac_address: "MAC Address",
     chip_revision: "Revision",
+    crystal_frequency: "Crystal Frequency",
     features: "Features",
 
     connection_type: "Type",
@@ -116,6 +121,9 @@ pub const EN_DICT: Dict = Dict {
     devices_btn_send: "Send",
     devices_btn_disconnect: "Disconnect",
     devices_btn_clear: "Clear Logs",
+    monitor_tab: "Monitor",
+    board_view_tab: "Board View",
+    board_view_title: "Board View",
 };
 
 pub const ZH_DICT: Dict = Dict {
@@ -145,6 +153,7 @@ pub const ZH_DICT: Dict = Dict {
     flash_size: "Flash 容量",
     mac_address: "MAC 地址",
     chip_revision: "芯片版本",
+    crystal_frequency: "晶振频率",
     features: "功能特性",
 
     connection_type: "连接类型",
@@ -172,6 +181,9 @@ pub const ZH_DICT: Dict = Dict {
     devices_btn_send: "发送",
     devices_btn_disconnect: "断开连接",
     devices_btn_clear: "清空日志",
+    monitor_tab: "串口监视",
+    board_view_tab: "开发板视图",
+    board_view_title: "开发板视图",
 };
 
 pub fn get_dict(lang: Language) -> Dict {

@@ -1,4 +1,4 @@
-use crate::components::{Button, Card};
+use crate::components::{Button, Card, PinoutView};
 use crate::i18n::{get_dict, Language};
 use dioxus::prelude::*;
 use serde::{Deserialize, Serialize};
@@ -45,6 +45,23 @@ struct MonitorSendArgs {
     data: String,
 }
 
+#[derive(Serialize, Deserialize, Clone, Debug)]
+struct ChipDetails {
+    chip_model: Option<String>,
+    mac_address: Option<String>,
+    flash_size: Option<String>,
+    chip_revision: Option<String>,
+    crystal_frequency: Option<String>,
+    features: Option<String>,
+    error: Option<String>,
+}
+
+#[derive(Serialize)]
+struct GetChipInfoArgs {
+    #[serde(rename = "portName")]
+    port_name: String,
+}
+
 #[component]
 pub fn Devices() -> Element {
     // Shared State
@@ -62,6 +79,12 @@ pub fn Devices() -> Element {
     let mut logs = use_signal(|| Vec::<String>::new()); // Mock logs
     let mut input_cmd = use_signal(|| "".to_string());
 
+    // Tab State
+    let mut active_tab = use_signal(|| "monitor".to_string());
+    let mut detected_model = use_signal(|| "ESP32-S3".to_string()); // Default or detected
+    let mut detected_connection_type = use_signal(|| None::<String>);
+    let mut chip_details_info = use_signal(|| None::<ChipDetails>);
+
     let lang = use_context::<Signal<Language>>();
     let dict = get_dict(*lang.read());
 
@@ -70,8 +93,34 @@ pub fn Devices() -> Element {
         spawn(async move {
             if let Ok(js_res) = invoke("check_device_status", JsValue::NULL).await {
                 if let Ok(res) = serde_wasm_bindgen::from_value::<DeviceStatus>(js_res) {
-                    if let Some(p) = res.port_name {
-                        port_name.set(p);
+                    if let Some(p) = res.port_name.clone() {
+                        port_name.set(p.clone());
+
+                        if let Some(conn_type) = res.connection_type.clone() {
+                            detected_connection_type.set(Some(conn_type));
+                        }
+
+                        // Optimisation: Fetch real chip info
+                        spawn(async move {
+                            let args =
+                                serde_wasm_bindgen::to_value(&GetChipInfoArgs { port_name: p })
+                                    .unwrap();
+                            match invoke("get_chip_info", args).await {
+                                Ok(val) => {
+                                    if let Ok(info) =
+                                        serde_wasm_bindgen::from_value::<ChipDetails>(val)
+                                    {
+                                        if let Some(model) = info.chip_model.clone() {
+                                            detected_model.set(model);
+                                        }
+                                        chip_details_info.set(Some(info));
+                                    }
+                                }
+                                Err(e) => {
+                                    web_sys::console::log_1(&e);
+                                }
+                            }
+                        });
                     }
                 }
             }
@@ -270,12 +319,34 @@ pub fn Devices() -> Element {
                 }
             }
 
-            // Right: Monitor Panel
+            // Right: Tabbed Panel
             div {
-                style: "flex: 1.5; min-width: 350px;",
-                Card {
-                    title: dict.devices_title_monitor.to_string(),
-                    subtitle: dict.devices_subtitle_monitor.to_string(),
+                style: "flex: 1.5; min-width: 350px; display: flex; flex-direction: column; gap: 12px;",
+
+                // Tabs
+                div {
+                    style: "display: flex; gap: 8px; border-bottom: 1px solid var(--md-sys-color-outline-variant); padding-bottom: 8px;",
+
+                    button {
+                        class: if *active_tab.read() == "monitor" { "md-button btn-tonal" } else { "md-button btn-text" },
+                        style: "border-radius: 8px 8px 0 0;",
+                        onclick: move |_| active_tab.set("monitor".to_string()),
+                        span { class: "material-symbols-outlined icon", "terminal" }
+                        "{dict.monitor_tab}"
+                    }
+                    button {
+                        class: if *active_tab.read() == "pinout" { "md-button btn-tonal" } else { "md-button btn-text" },
+                        style: "border-radius: 8px 8px 0 0;",
+                        onclick: move |_| active_tab.set("pinout".to_string()),
+                        span { class: "material-symbols-outlined icon", "developer_board" }
+                        "{dict.board_view_tab}"
+                    }
+                }
+
+                if *active_tab.read() == "monitor" {
+                    Card {
+                        title: dict.devices_title_monitor.to_string(),
+                        subtitle: dict.devices_subtitle_monitor.to_string(),
                     actions: rsx! {
                         // Port Input
                         div {
@@ -402,9 +473,19 @@ pub fn Devices() -> Element {
                                 },
                             }
                         }
+                }
+                }
+            } else {
+                Card {
+                    title: dict.board_view_title.to_string(),
+                    subtitle: format!("View for {}", detected_model),
+                    PinoutView {
+                        chip_model: detected_model.read().clone(),
+                        connection_type: detected_connection_type.read().clone(),
                     }
                 }
             }
         }
+            }
     }
 }

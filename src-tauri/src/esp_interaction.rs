@@ -13,6 +13,7 @@ pub fn connect_and_get_info(port_name: &str) -> ChipDetails {
                 mac_address: None,
                 flash_size: None,
                 features: None,
+                crystal_frequency: None,
                 chip_revision: None,
                 error: Some(format!("Serial Error: {}", e)),
             }
@@ -67,6 +68,7 @@ pub fn connect_and_get_info(port_name: &str) -> ChipDetails {
                 mac_address: None,
                 flash_size: None,
                 features: None,
+                crystal_frequency: None,
                 chip_revision: None,
                 error: Some(format!("Connect Error: {}", e)),
             }
@@ -125,6 +127,12 @@ pub fn connect_and_get_info(port_name: &str) -> ChipDetails {
         Err(_) => None,
     };
 
+    // Get Crystal Frequency
+    let crystal_frequency = match flasher.chip().xtal_frequency(flasher.connection()) {
+        Ok(freq) => Some(format!("{}", freq)),
+        Err(_) => None,
+    };
+
     println!("Debug Info: {}", debug_info);
 
     ChipDetails {
@@ -132,6 +140,7 @@ pub fn connect_and_get_info(port_name: &str) -> ChipDetails {
         mac_address,
         flash_size,
         features,
+        crystal_frequency,
         chip_revision,
         error: None,
     }
