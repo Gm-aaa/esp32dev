@@ -1,5 +1,5 @@
 {
-  "$schema": "https://schema.tauri.app/config/2",
+  "$schema": "./tauri-config-schema.json",
   "productName": "esp32dev",
   "version": "0.1.0",
   "identifier": "com.gmaaa.esp32dev",

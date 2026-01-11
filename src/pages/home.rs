@@ -314,11 +314,13 @@ pub fn Home() -> Element {
                                     }
                                 }
                                 if let Some(sn) = &device_status.read().serial_number {
-                                    InfoItem {
-                                        icon: "pin",
-                                        label: dict.serial_number.to_string(),
-                                        value: sn.clone(),
-                                        full_width: true,
+                                    if chip_details.read().mac_address.as_ref() != Some(sn) {
+                                        InfoItem {
+                                            icon: "pin",
+                                            label: dict.serial_number.to_string(),
+                                            value: sn.clone(),
+                                            full_width: true,
+                                        }
                                     }
                                 }
                                 if let Some(ctype) = &device_status.read().connection_type {

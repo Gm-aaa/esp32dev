@@ -79,16 +79,8 @@ pub fn connect_and_get_info(port_name: &str) -> ChipDetails {
     // Attempt to inspect flasher state
     let debug_info = format!("{:?}", flasher);
 
-    // Parse Chip Model and Flash Size from debug string explicitly
-    let chip_model = if debug_info.contains("Esp32s3") {
-        Some("ESP32-S3".to_string())
-    } else if debug_info.contains("Esp32c3") {
-        Some("ESP32-C3".to_string())
-    } else if debug_info.contains("Esp32") {
-        Some("ESP32".to_string())
-    } else {
-        Some("Unknown ESP32".to_string())
-    };
+    // Use the chip trait to get the model dynamically
+    let chip_model = Some(flasher.chip().to_string());
 
     let flash_size = if debug_info.contains("_16Mb") {
         Some("16 MB".to_string())
