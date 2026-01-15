@@ -52,6 +52,7 @@ pub struct Dict {
     pub devices_label_flash_address: &'static str,
     pub devices_flashing_status: &'static str,
     pub devices_btn_start_flash: &'static str,
+    pub devices_btn_erase_flash: &'static str,
 
     pub devices_title_monitor: &'static str,
     pub devices_subtitle_monitor: &'static str,
@@ -112,6 +113,7 @@ pub const EN_DICT: Dict = Dict {
     devices_label_flash_address: "Flash Address (Hex)",
     devices_flashing_status: "Flashing...",
     devices_btn_start_flash: "Start Flash",
+    devices_btn_erase_flash: "Erase Flash",
 
     devices_title_monitor: "Serial Monitor",
     devices_subtitle_monitor: "Real-time logs",
@@ -172,6 +174,7 @@ pub const ZH_DICT: Dict = Dict {
     devices_label_flash_address: "烧录地址 (Hex)",
     devices_flashing_status: "正在烧录...",
     devices_btn_start_flash: "开始烧录",
+    devices_btn_erase_flash: "清空 Flash",
 
     devices_title_monitor: "串口监视器",
     devices_subtitle_monitor: "实时日志监控",

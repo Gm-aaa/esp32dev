@@ -137,3 +137,61 @@ pub fn connect_and_get_info(port_name: &str) -> ChipDetails {
         error: None,
     }
 }
+
+pub fn erase_flash(port_name: &str) -> Result<String, String> {
+    // 1. Open Native Serial Port
+    let serial_port = serialport::new(port_name, 115200)
+        .open_native()
+        .map_err(|e| format!("Serial Error: {}", e))?;
+
+    // 2. Find Port Info
+    let ports = serialport::available_ports().unwrap_or_default();
+    let port_info = ports
+        .iter()
+        .find(|p| p.port_name == port_name)
+        .map(|p| match &p.port_type {
+            serialport::SerialPortType::UsbPort(info) => info.clone(),
+            _ => UsbPortInfo {
+                vid: 0,
+                pid: 0,
+                serial_number: None,
+                manufacturer: None,
+                product: None,
+            },
+        })
+        .unwrap_or(UsbPortInfo {
+            vid: 0,
+            pid: 0,
+            serial_number: None,
+            manufacturer: None,
+            product: None,
+        });
+
+    // 3. Create Connection
+    let connection = Connection::new(
+        serial_port,
+        port_info,
+        ResetAfterOperation::default(),
+        ResetBeforeOperation::default(),
+        115200,
+    );
+
+    // 4. Connect Flasher
+    let mut flasher = Flasher::connect(
+        connection, true,  // load stub
+        false, // verify stub
+        false, // force
+        None,  // chip
+        None,  // target_baud
+    )
+    .map_err(|e| format!("Connect Error: {}", e))?;
+
+    // 5. Erase Flash
+    println!("Erasing flash...");
+    flasher
+        .erase_flash()
+        .map_err(|e| format!("Erase Error: {}", e))?;
+    println!("Flash erased successfully");
+
+    Ok("Flash Memory Erased Successfully".to_string())
+}

@@ -119,6 +119,14 @@ async fn flash_firmware(
     Ok("Flash started (Stub)".to_string())
 }
 
+#[tauri::command]
+async fn erase_flash(port_name: String) -> Result<String, String> {
+    // Run in a blocking task because it blocks the thread
+    tauri::async_runtime::spawn_blocking(move || esp_interaction::erase_flash(&port_name))
+        .await
+        .map_err(|e| e.to_string())?
+}
+
 use std::io::{Read, Write};
 use std::sync::{Arc, Mutex};
 use std::time::Duration;
@@ -297,7 +305,8 @@ pub fn run() {
             monitor_connect,
             monitor_disconnect,
             monitor_send,
-            pick_firmware_file
+            pick_firmware_file,
+            erase_flash
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

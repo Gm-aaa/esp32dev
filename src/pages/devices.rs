@@ -2,6 +2,7 @@ use crate::components::{Button, Card, PinoutView};
 use crate::i18n::{get_dict, Language};
 use dioxus::prelude::*;
 use serde::{Deserialize, Serialize};
+use serde_json::json;
 use wasm_bindgen::prelude::*;
 
 #[wasm_bindgen]
@@ -71,6 +72,8 @@ pub fn Devices() -> Element {
     let mut firmware_path = use_signal(|| "".to_string());
     let mut flash_address = use_signal(|| "0x0".to_string());
     let mut is_flashing = use_signal(|| false);
+    let mut is_erasing = use_signal(|| false);
+    let mut erase_msg = use_signal(|| "".to_string());
     let mut flash_progress = use_signal(|| 0.0);
 
     // Monitor State
@@ -102,9 +105,15 @@ pub fn Devices() -> Element {
 
                         // Optimisation: Fetch real chip info
                         spawn(async move {
-                            let args =
-                                serde_wasm_bindgen::to_value(&GetChipInfoArgs { port_name: p })
-                                    .unwrap();
+                            let args = match serde_wasm_bindgen::to_value(&GetChipInfoArgs {
+                                port_name: p,
+                            }) {
+                                Ok(a) => a,
+                                Err(e) => {
+                                    web_sys::console::error_1(&e.to_string().into());
+                                    return;
+                                }
+                            };
                             match invoke("get_chip_info", args).await {
                                 Ok(val) => {
                                     if let Ok(info) =
@@ -201,27 +210,28 @@ pub fn Devices() -> Element {
             style: "display: flex; flex-wrap: wrap; gap: 24px; height: 100%; align-items: flex-start; overflow-y: auto; padding-bottom: 24px;",
 
             // Left: Flashing Panel
-            div {
-                style: "flex: 1; min-width: 300px;",
+            div { style: "flex: 1; min-width: 300px;",
                 Card {
                     title: dict.devices_title_flashing.to_string(),
                     subtitle: dict.devices_subtitle_flashing.to_string(),
 
-                    div {
-                        style: "display: flex; flex-direction: column; gap: 16px; margin-top: 16px;",
+                    div { style: "display: flex; flex-direction: column; gap: 16px; margin-top: 16px;",
 
                         // File Selection
                         div {
-                            label { style: "display: block; font-size: 0.8em; margin-bottom: 4px; color: var(--md-sys-color-on-surface-variant);", "{dict.devices_label_firmware_file}" }
-                            div {
-                                style: "display: flex; gap: 8px;",
+                            label { r#for: "firmware_path", style: "display: block; font-size: 0.8em; margin-bottom: 4px; color: var(--md-sys-color-on-surface-variant);",
+                                "{dict.devices_label_firmware_file}"
+                            }
+                            div { style: "display: flex; gap: 8px;",
                                 input {
                                     r#type: "text",
+                                    name: "firmware_path",
+                                    id: "firmware_path",
                                     value: "{firmware_path}",
                                     placeholder: "{dict.devices_placeholder_firmware_file}",
                                     class: "md-input",
                                     style: "flex: 1;",
-                                    oninput: move |evt| firmware_path.set(evt.value())
+                                    oninput: move |evt| firmware_path.set(evt.value()),
                                 }
                                 button {
                                     class: "md-button btn-tonal",
@@ -229,15 +239,15 @@ pub fn Devices() -> Element {
                                         web_sys::console::log_1(&"Browse button clicked".into());
                                         spawn(async move {
                                             match invoke("pick_firmware_file", JsValue::NULL).await {
-                                               Ok(res) => {
-                                                   web_sys::console::log_1(&"Invoke success".into());
-                                                   if let Some(path) = res.as_string() {
-                                                       firmware_path.set(path);
-                                                   }
-                                               }
-                                               Err(e) => {
-                                                   web_sys::console::error_1(&e);
-                                               }
+                                                Ok(res) => {
+                                                    web_sys::console::log_1(&"Invoke success".into());
+                                                    if let Some(path) = res.as_string() {
+                                                        firmware_path.set(path);
+                                                    }
+                                                }
+                                                Err(e) => {
+                                                    web_sys::console::error_1(&e);
+                                                }
                                             }
                                         });
                                     },
@@ -249,30 +259,29 @@ pub fn Devices() -> Element {
 
                         // Address Config
                         div {
-                            label { style: "display: block; font-size: 0.8em; margin-bottom: 4px; color: var(--md-sys-color-on-surface-variant);", "{dict.devices_label_flash_address}" }
+                            label { r#for: "flash_address", style: "display: block; font-size: 0.8em; margin-bottom: 4px; color: var(--md-sys-color-on-surface-variant);",
+                                "{dict.devices_label_flash_address}"
+                            }
                             input {
                                 r#type: "text",
+                                name: "flash_address",
+                                id: "flash_address",
                                 value: "{flash_address}",
                                 class: "md-input",
                                 style: "width: 100%;",
-                                oninput: move |evt| flash_address.set(evt.value())
+                                oninput: move |evt| flash_address.set(evt.value()),
                             }
                         }
 
                         // Progress Bar
                         if *is_flashing.read() {
-                            div {
-                                style: "display: flex; flex-direction: column; gap: 4px;",
-                                div {
-                                    style: "display: flex; justify-content: space-between; font-size: 0.8em;",
+                            div { style: "display: flex; flex-direction: column; gap: 4px;",
+                                div { style: "display: flex; justify-content: space-between; font-size: 0.8em;",
                                     span { "{dict.devices_flashing_status}" }
                                     span { "{flash_progress.read()}%" }
                                 }
-                                div {
-                                    style: "height: 4px; background: var(--md-sys-color-surface-container-highest); border-radius: 2px; overflow: hidden;",
-                                    div {
-                                        style: "height: 100%; background: var(--md-sys-color-primary); width: {flash_progress.read()}%; transition: width 0.2s;",
-                                    }
+                                div { style: "height: 4px; background: var(--md-sys-color-surface-container-highest); border-radius: 2px; overflow: hidden;",
+                                    div { style: "height: 100%; background: var(--md-sys-color-primary); width: {flash_progress.read()}%; transition: width 0.2s;" }
                                 }
                             }
                         }
@@ -295,12 +304,15 @@ pub fn Devices() -> Element {
                                     is_flashing.set(true);
                                     flash_progress.set(0.0);
 
-                                    let args = serde_wasm_bindgen::to_value(&FlashArgs {
-                                        port_name: port,
-                                        firmware_path: path,
-                                        flash_address: addr,
-                                    }).unwrap();
+                                    let args = serde_wasm_bindgen::to_value(
 
+                                            &FlashArgs {
+                                                port_name: port,
+                                                firmware_path: path,
+                                                flash_address: addr,
+                                            },
+                                        )
+                                        .unwrap();
                                     match invoke("flash_firmware", args).await {
                                         Ok(_) => {
                                             flash_progress.set(100.0);
@@ -315,17 +327,63 @@ pub fn Devices() -> Element {
                             },
                             "{dict.devices_btn_start_flash}"
                         }
+
+                        // Erase Button
+                        Button {
+                            variant: "tonal".to_string(),
+                            icon: "delete_forever".to_string(),
+                            onclick: move |_| {
+                                let port = port_name.read().clone();
+                                spawn(async move {
+                                    if port.is_empty() {
+                                        web_sys::console::error_1(&"No port selected".into());
+                                        return;
+                                    }
+                                    is_erasing.set(true);
+
+                                    // FIX 1: Use snake_case "port_name" to match Rust backend
+
+                                    // FIX 2: No alert, just log. Better UX would be a toast or status text.
+                                    let args = serde_wasm_bindgen::to_value(&json!({ "portName" : port }))
+                                        .unwrap_or(JsValue::NULL);
+                                    web_sys::console::log_1(&"Invoking erase_flash...".into());
+                                    erase_msg.set("".to_string());
+                                    match invoke("erase_flash", args).await {
+                                        Ok(_) => {
+                                            web_sys::console::log_1(&"Erase success".into());
+                                            erase_msg.set("清除成功！".to_string());
+                                            // Clear message after 3 seconds
+                                            gloo_timers::future::TimeoutFuture::new(3000).await;
+                                            erase_msg.set("".to_string());
+                                        }
+                                        Err(e) => {
+                                            web_sys::console::error_1(&e);
+                                            erase_msg.set("清除失败！".to_string());
+                                        }
+                                    }
+                                    is_erasing.set(false);
+                                });
+                            },
+                            if *is_erasing.read() {
+                                "清除中..."
+                            } else {
+                                "{dict.devices_btn_erase_flash}"
+                            }
+                        }
+                        if !erase_msg.read().is_empty() {
+                            div { style: "font-size: 0.8em; margin-top: 4px; color: var(--md-sys-color-primary);",
+                                "{erase_msg}"
+                            }
+                        }
                     }
                 }
             }
 
             // Right: Tabbed Panel
-            div {
-                style: "flex: 1.5; min-width: 350px; display: flex; flex-direction: column; gap: 12px;",
+            div { style: "flex: 1.5; min-width: 350px; display: flex; flex-direction: column; gap: 12px;",
 
                 // Tabs
-                div {
-                    style: "display: flex; gap: 8px; border-bottom: 1px solid var(--md-sys-color-outline-variant); padding-bottom: 8px;",
+                div { style: "display: flex; gap: 8px; border-bottom: 1px solid var(--md-sys-color-outline-variant); padding-bottom: 8px;",
 
                     button {
                         class: if *active_tab.read() == "monitor" { "md-button btn-tonal" } else { "md-button btn-text" },
@@ -347,145 +405,164 @@ pub fn Devices() -> Element {
                     Card {
                         title: dict.devices_title_monitor.to_string(),
                         subtitle: dict.devices_subtitle_monitor.to_string(),
-                    actions: rsx! {
-                        // Port Input
-                        div {
-                                style: "display: flex; align-items: center; gap: 8px;",
+                        actions: rsx! {
+                            // Port Input
+                            // Baud Rate Select
+
+
+
+
+
+
+
+
+
+                            div { style: "display: flex; align-items: center; gap: 8px;",
                                 span {
                                     style: "font-size: 0.9em; color: var(--md-sys-color-on-surface-variant);",
                                     "Port" // TODO: Add to Dict
                                 }
                                 input {
                                     r#type: "text",
+                                    name: "monitor_port",
+                                    id: "monitor_port",
                                     value: "{port_name}",
                                     class: "md-input",
                                     style: "width: 80px;",
-                                    oninput: move |evt| port_name.set(evt.value())
+                                    oninput: move |evt| port_name.set(evt.value()),
                                 }
-                        }
-                        // Baud Rate Select
-                        div {
-                            style: "display: flex; align-items: center; gap: 8px; margin-right: 8px;",
-                            span {
-                                style: "font-size: 0.9em; color: var(--md-sys-color-on-surface-variant);",
-                                "{dict.devices_label_baud_rate}"
                             }
-                            select {
-                                class: "md-select",
-                                value: "{baud_rate}",
-                                onchange: move |evt| baud_rate.set(evt.value()),
-                                option { value: "9600", "9600" }
-                                option { value: "115200", "115200" }
-                                option { value: "921600", "921600" }
-                            }
-                        }
-                        Button {
-                            variant: "text".to_string(),
-                            icon: "delete_sweep".to_string(),
-                            onclick: move |_| {
-                                logs.write().clear();
-                            },
-                            "{dict.devices_btn_clear}"
-                        }
-                        Button {
-                            variant: { if *is_connected.read() { "tonal" } else { "text" } }.to_string(),
-                            icon: { if *is_connected.read() { "link_off" } else { "link" } }.to_string(),
-                            onclick: move |_| {
-                                let connected = *is_connected.read();
-                                let port = port_name.read().clone(); // Use dynamic port
-                                let baud_str = baud_rate.read().clone();
-                                let baud = baud_str.parse::<u32>().unwrap_or(115200);
-
-                                spawn(async move {
-                                    if connected {
-                                        if invoke("monitor_disconnect", JsValue::NULL).await.is_ok() {
-                                            is_connected.set(false);
-                                        }
-                                    } else {
-                                        if port.is_empty() {
-                                            web_sys::console::error_1(&"No port selected".into());
-                                            return;
-                                        }
-                                         let args = serde_wasm_bindgen::to_value(&MonitorConnectArgs {
-                                            port_name: port,
-                                            baud_rate: baud,
-                                        }).unwrap();
-
-                                        if invoke("monitor_connect", args).await.is_ok() {
-                                            is_connected.set(true);
-                                        }
+                            div { style: "display: flex; align-items: center; gap: 8px; margin-right: 8px;",
+                                span { style: "font-size: 0.9em; color: var(--md-sys-color-on-surface-variant);",
+                                    label {
+                                        r#for: "baud_rate",
+                                        "{dict.devices_label_baud_rate}"
                                     }
-                                });
-                            },
-                            if *is_connected.read() { "{dict.devices_btn_disconnect}" } else { "{dict.connect}" }
-                        }
-                    },
-
-                    div {
-                        style: "display: flex; flex-direction: column; gap: 12px; margin-top: 8px;",
-
-                        // Log Area
-                        div {
-                            style: "background: #1e1e1e; color: #d4d4d4; font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 0.9em; padding: 12px; border-radius: 8px; height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;",
-                            if logs.read().is_empty() {
-                                span { style: "color: #666;", "{dict.devices_log_placeholder}" }
-                            }
-                            for log in logs.read().iter() {
-                                span { "{log}" }
-                            }
-                        }
-
-                        // Input Area
-                        div {
-                            style: "display: flex; gap: 8px;",
-                            input {
-                                r#type: "text",
-                                value: "{input_cmd}",
-                                placeholder: "{dict.devices_input_placeholder}",
-                                class: "md-input",
-                                style: "flex: 1;",
-                                oninput: move |evt| input_cmd.set(evt.value()),
-                                onkeypress: move |evt| {
-                                    if evt.key() == Key::Enter {
-                                        if !input_cmd.read().is_empty() {
-                                            logs.write().push(format!("> {}", input_cmd.read()));
-                                            input_cmd.set("".to_string());
-                                        }
-                                    }
+                                }
+                                select {
+                                    class: "md-select",
+                                    name: "baud_rate",
+                                    id: "baud_rate",
+                                    value: "{baud_rate}",
+                                    onchange: move |evt| baud_rate.set(evt.value()),
+                                    option { value: "9600", "9600" }
+                                    option { value: "115200", "115200" }
+                                    option { value: "921600", "921600" }
                                 }
                             }
                             Button {
-                                variant: "tonal".to_string(),
-                                icon: "send".to_string(),
+                                variant: "text".to_string(),
+                                icon: "delete_sweep".to_string(),
                                 onclick: move |_| {
-                                    let cmd = input_cmd.read().clone();
-                                    if !cmd.is_empty() {
-                                        logs.write().push(format!("> {}", cmd));
-                                        input_cmd.set("".to_string());
-
-                                        spawn(async move {
-                                            let args = serde_wasm_bindgen::to_value(&MonitorSendArgs {
-                                                data: cmd
-                                            }).unwrap();
-                                            invoke("monitor_send", args).await.ok();
-                                        });
-                                    }
+                                    logs.write().clear();
                                 },
+                                "{dict.devices_btn_clear}"
+                            }
+                            Button {
+                                variant: { if *is_connected.read() { "tonal" } else { "text" } }.to_string(),
+                                icon: { if *is_connected.read() { "link_off" } else { "link" } }.to_string(),
+                                onclick: move |_| {
+                                    let connected = *is_connected.read();
+                                    let port = port_name.read().clone(); // Use dynamic port
+                                    let baud_str = baud_rate.read().clone();
+                                    let baud = baud_str.parse::<u32>().unwrap_or(115200);
+
+                                    spawn(async move {
+                                        if connected {
+                                            if invoke("monitor_disconnect", JsValue::NULL).await.is_ok() {
+                                                is_connected.set(false);
+                                            }
+                                        } else {
+                                            if port.is_empty() {
+                                                web_sys::console::error_1(&"No port selected".into());
+                                                return;
+                                            }
+                                            let args = serde_wasm_bindgen::to_value(
+
+                                                    &MonitorConnectArgs {
+                                                        port_name: port,
+                                                        baud_rate: baud,
+                                                    },
+                                                )
+                                                .unwrap();
+                                            if invoke("monitor_connect", args).await.is_ok() {
+                                                is_connected.set(true);
+                                            }
+                                        }
+                                    });
+                                },
+                                if *is_connected.read() {
+                                    "{dict.devices_btn_disconnect}"
+                                } else {
+                                    "{dict.connect}"
+                                }
+                            }
+                        },
+
+                        div { style: "display: flex; flex-direction: column; gap: 12px; margin-top: 8px;",
+
+                            // Log Area
+                            div { style: "background: #1e1e1e; color: #d4d4d4; font-family: 'JetBrains Mono', 'Consolas', 'Courier New', monospace; font-size: 0.9em; padding: 12px; border-radius: 8px; height: 400px; overflow-y: auto; white-space: pre-wrap; word-wrap: break-word;",
+                                if logs.read().is_empty() {
+                                    span { style: "color: #666;", "{dict.devices_log_placeholder}" }
+                                }
+                                for log in logs.read().iter() {
+                                    span { "{log}" }
+                                }
+                            }
+
+                            // Input Area
+                            div { style: "display: flex; gap: 8px;",
+                                input {
+                                    r#type: "text",
+                                    name: "monitor_input",
+                                    id: "monitor_input",
+                                    value: "{input_cmd}",
+                                    placeholder: "{dict.devices_input_placeholder}",
+                                    class: "md-input",
+                                    style: "flex: 1;",
+                                    oninput: move |evt| input_cmd.set(evt.value()),
+                                    onkeypress: move |evt| {
+                                        if evt.key() == Key::Enter {
+                                            if !input_cmd.read().is_empty() {
+                                                logs.write().push(format!("> {}", input_cmd.read()));
+                                                input_cmd.set("".to_string());
+                                            }
+                                        }
+                                    },
+                                }
+                                Button {
+                                    variant: "tonal".to_string(),
+                                    icon: "send".to_string(),
+                                    onclick: move |_| {
+                                        let cmd = input_cmd.read().clone();
+                                        if !cmd.is_empty() {
+                                            logs.write().push(format!("> {}", cmd));
+                                            input_cmd.set("".to_string());
+
+                                            spawn(async move {
+                                                let args = serde_wasm_bindgen::to_value(&MonitorSendArgs { data: cmd })
+                                                    .unwrap();
+                                                invoke("monitor_send", args).await.ok();
+                                            });
+                                        }
+                                    },
+                                }
                             }
                         }
-                }
-                }
-            } else {
-                Card {
-                    title: dict.board_view_title.to_string(),
-                    subtitle: format!("View for {}", detected_model),
-                    PinoutView {
-                        chip_model: detected_model.read().clone(),
-                        connection_type: detected_connection_type.read().clone(),
+                    }
+                } else {
+                    Card {
+                        title: dict.board_view_title.to_string(),
+                        subtitle: format!("View for {}", detected_model),
+                        PinoutView {
+                            chip_model: detected_model.read().clone(),
+                            connection_type: detected_connection_type.read().clone(),
+                        }
                     }
                 }
             }
+
         }
-            }
     }
 }

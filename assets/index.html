@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Esp32Dev</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="material.css" />
+    <script>
+      // CRITICAL FIX: Monkey-patch Dioxus CLI's broken error toaster
+      // This prevents "Uncaught TypeError: Cannot set properties of null (setting 'className') at showDXToast"
+      window.showDXToast = function (message, type) {
+        console.warn("Supressed Dioxus Toast:", message, type);
+      };
+    </script>
+  </head>
+  <body>
+    <div id="main"></div>
+  </body>
+</html>
